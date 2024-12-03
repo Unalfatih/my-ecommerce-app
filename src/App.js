@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ProductList from "./components/ProductList";
+import ProductDetail from "./components/ProductDetail";
+import Cart from "./components/Cart";
+import { CartProvider } from "./contexts/CartContext";
+import { Link } from "react-router-dom";
+import Checkout from "./components/Checkout";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CartProvider>
+      <Router>
+        <div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
+        <h1 className="text-xl font-bold text-gray-700">Ürün Listesi</h1>
+          <div style={{textAlign: "center", marginBottom: '20px'}}>
+            <Link to="/cart" style={{fontSize: '18px', textDecoration: 'none', color: '#007bff'}}>
+            Sepete Git
+            </Link>
+          </div>
+          <Routes>
+            <Route path="/" element={<ProductList/>} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart/>} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Routes>
+        </div>
+      </Router>
+    </CartProvider>
   );
-}
+};
 
 export default App;
